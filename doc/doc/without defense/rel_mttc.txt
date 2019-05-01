@@ -1,0 +1,19 @@
+
+relgraph tmpgraph
+ag_sn124 ag_sn61 exp(2.0)
+ag_sn2 ag_sink exp(0.05)
+ag_sn6 ag_sn2 exp(2.0)
+ag_sn14 ag_sn6 exp(2.0)
+ag_sn249 ag_sn124 exp(2.0)
+ag_sn30 ag_sn14 exp(2.0)
+ag_sn499 ag_sn249 exp(2.0)
+ag_sn999 ag_sn499 exp(2.0)
+ag_attacker ag_sn999 exp(2.0)
+ag_sn61 ag_sn30 exp(2.0)
+end
+func Reliability(t) 1-tvalue(t;tmpgraph)
+loop t,0,10,0.5
+expr Reliability(t)
+end
+expr mean(tmpgraph)
+end
