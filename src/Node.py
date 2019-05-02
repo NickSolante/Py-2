@@ -9,11 +9,13 @@ class node(object):
     """
     Create basic node object.
     """
-    def __init__(self, name):
+    
+    def __init__(self, name, radius = 30):
         self.name = name
+        print(name)
         #Set connections        
         self.con = []
-        #Store lower layer info     
+        #Store lower layer info    
         self.child = None
         #Store a list of parent nodes
         self.parent = None
@@ -21,6 +23,9 @@ class node(object):
         self.isStart = False
         self.isEnd = False
         self.subnet = []
+        self.coorX = random.randint(1, 299)
+        self.coorY = random.randint(1, 299)
+        self.effRadius = radius
 
     #Set the node as normal/start/end
     def setStart(self):
@@ -33,6 +38,7 @@ class node(object):
     #Check whether the node is leaf or not
     def isLeaf(self):
         return (len(self.con) is 1)
+    
     
 class iot(node):
     """

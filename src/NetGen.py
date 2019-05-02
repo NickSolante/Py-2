@@ -7,7 +7,9 @@ from Harm import *
 from SecurityEvaluator import *
 import math
 import random
-import pymobility
+import PyDev
+
+CONST_DIMENSIONS = (300, 300)
 
 
 """
@@ -79,7 +81,7 @@ def createWiFi():
 
 if __name__ == '__main__':
     net = createWiFi()
-    
+    no_nodes = 3
     #Create HARM and compute attack paths
     """
     h = harm()
@@ -88,8 +90,11 @@ if __name__ == '__main__':
     h.model.printAG()
     """
     #Calculate security metric: attack impact
-    attackImpactAnalysis(net, 3)
-    
+    attackImpactAnalysis(net, no_nodes)
+    rw = PyDev.RandomWalk(no_nodes, CONST_DIMENSIONS, velocity=1,
+                    distance=1, border_policy='reflect')
+
+    print(rw)
     
     #Calculate security metric: risk
     

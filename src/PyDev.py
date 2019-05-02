@@ -162,8 +162,9 @@ class RandomWalk(StochasticWalk):
           *nr_nodes*:
             Integer, the number of nodes.
           
-          *dimensions*:
+          *dimensions*: 
             Tuple of Integers, the x and y dimensions of the simulation area.
+      
           
         keyword arguments:
         
@@ -193,3 +194,4 @@ class RandomWalk(StochasticWalk):
 
         StochasticWalk.__init__(
             self, nr_nodes, dimensions, FL_DISTR, VELOCITY_DISTR, border_policy=border_policy)
+
