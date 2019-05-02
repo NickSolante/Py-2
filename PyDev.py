@@ -1,6 +1,21 @@
 import numpy as np
 from numpy.random import rand
 
+# define a Uniform Distribution
+
+
+def U(MIN, MAX, SAMPLES): return rand(*SAMPLES.shape) * (MAX - MIN) + MIN
+
+# define a Truncated Power Law Distribution
+
+
+def P(ALPHA, MIN, MAX, SAMPLES): return ((MAX ** (ALPHA+1.) - 1.)
+                                         * rand(*SAMPLES.shape) + 1.) ** (1./(ALPHA+1.))
+
+# define an Exponential Distribution
+
+
+def E(SCALE, SAMPLES): return -SCALE*np.log(rand(*SAMPLES.shape))
 
 class StochasticWalk(object):
     
