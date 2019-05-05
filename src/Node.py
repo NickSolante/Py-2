@@ -2,7 +2,8 @@
 This module contains node objects
 """
 
-from random import *
+# from random import *
+import random
 from math import *
 
 class node(object):
