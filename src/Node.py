@@ -24,6 +24,7 @@ class node(object):
         self.isStart = False
         self.isEnd = False
         self.subnet = []
+        # set coordinates for random initial area
         self.coorX = random.randint(1, 299)
         self.coorY = random.randint(1, 299)
         self.effRadius = radius
@@ -78,7 +79,7 @@ class computer(node):
     Could be used for the attacker node.
     """
     def __init__(self, name):
-        super(computer, self).__init__(name)
+        super(computer, self).__init__(name, radius = 60)
         self.vul = None
         self.type = None
             

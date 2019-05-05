@@ -55,14 +55,20 @@ def createWiFi():
     #Create a Wi-Fi network
     net = network()
     
-    #connect tv and cam to tab
-    net.connectOneWay(tv, tab)
-    net.connectOneWay(cam, tab)
+    
     
     net.nodes.append(tv)
     net.nodes.append(cam)
     net.nodes.append(tab)
-    
+
+    if(net.checkNodesRange()):
+        #connect tv and cam to tab
+        net.connectOneWay(tv, tab)
+        net.connectOneWay(cam, tab)
+
+
+
+
     #Set the attacker as the start
     A = computer('attacker')    
     A.setStart()
@@ -72,6 +78,7 @@ def createWiFi():
             A.con.append(node)
         else:
             node.setEnd() 
+    
     
     net.nodes.append(A)
     net.constructSE()

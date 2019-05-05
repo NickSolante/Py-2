@@ -61,6 +61,7 @@ class network(object):
         """
         Connect node1 with node2 in the network.
         """
+
         #no self connection
         if node1 is node2:
             return None
@@ -69,15 +70,52 @@ class network(object):
             node1.con.append(node2)
         if (node1 not in node2.con):
             node2.con.append(node1)
+
+    # function checks if they are within range
+    def withinRange(self, node1 ,node2):
+        distSq = (node1.coorX - node2.coorX) * (node1.coorX - node2.coorX) + \
+            (node1.coorY - node2.coorY) * (node1.coorY - node2.coorY)
+        radSumSq = (node1.effRadius + node2.effRadius) * \
+            (node1.effRadius + node2.effRadius)
+        if (distSq == radSumSq):
+            return 1
+        elif (distSq > radSumSq):
+            return -1
+        else:
+            return 1
+        
+    def checkNodesRange(self):
+        result = 0
+        
+        for node_x in self.nodes:
+            for node_y in self.nodes:
+                if node_x.name == node_y.name:
+                    continue
+                else:
+                    result = self.withinRange(node_x, node_y)
+        
+        if result < len(self.nodes):
+            return False
+        else:
+            return True
+
+    def checkNodesRangeAttack(self):
+        for x in range(len(nodes)):
+            if x is len(nodes) - 1:
+                break
+            else:
+                withinRange(nodes[len(nodes)-1], nodes[x])
+
+
     
     def disconnectTwoWays(self, node1, node2):
         """
         Disconnect node1 and node2 in the network.
         """
         if node2 in node1.con:
-            node1.con.remove(node2)   
+            node1.con.remove(node2)
         if node1 in node2.con:
-            node2.con.remove(node1)  
+            node2.con.remove(node1)
      
     def printNet(self):
         """
