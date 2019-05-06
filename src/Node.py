@@ -14,7 +14,7 @@ class node(object):
     def __init__(self, name, radius = 30):
         self.name = name
         print(name)
-        #Set connections        
+        #Set connections 
         self.con = []
         #Store lower layer info    
         self.child = None

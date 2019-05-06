@@ -8,7 +8,6 @@ from SecurityEvaluator import *
 import math
 import random
 import PyDev
-
 CONST_DIMENSIONS = (300, 300)
 
 

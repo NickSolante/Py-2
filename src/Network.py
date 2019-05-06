@@ -83,7 +83,7 @@ class network(object):
             return -1
         else:
             return 1
-        
+    # checks if each node is whithin range of eachother
     def checkNodesRange(self):
         result = 0
         
