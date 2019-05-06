@@ -7,8 +7,6 @@ from Harm import *
 from SecurityEvaluator import *
 import math
 import random
-import PyDev
-CONST_DIMENSIONS = (300, 300)
 
 
 """
@@ -16,17 +14,17 @@ CONST_DIMENSIONS = (300, 300)
 Create network with vulnerabilities for the example IoT network.
 -------------------------------------------------------------------------
 """
-# study this part of the code and change wifi to bluetooth
+
 def createWiFi():
-    #Create a TV with two vulnerabilities
-    tv = iot('tv')
-    tv.subnet.append('wifi')
-    v1 = vulNode('CVE-2008-4866')
-    v1.createVuls(tv, 10.0, 1) #CVSS base score: 10.0
+    #Create a Ipod with two vulnerabilities
+    ipod = iot('ipod')
+    ipod.subnet.append('wifi')
+    v1 = vulNode('CVE-2009-2206')
+    v1.createVuls(ipod, 10.0, 1) #CVSS base score: 10.0
     v2 = vulNode('CVE-2009-0385')
-    v2.createVuls(tv, 10.0, 1) #CVSS base score: 9.3
-    v2.thresholdPri(tv, 1)
-    v2.terminalPri(tv, 1)
+    v2.createVuls(ipod, 10.0, 1) #CVSS base score: 9.3
+    v2.thresholdPri(ipod, 1)
+    v2.terminalPri(ipod, 1)
 
     #Create a camera with one vulnerability
     cam = iot('cam')
@@ -46,48 +44,41 @@ def createWiFi():
     v6 = vulNode('tb_v3')
     v6.createVuls(tab, 10.0, 3)
     #The attacker needs to exploit both vulnerabilities to compromise the node
-    tab.vul.connectOneWay(tab.vul.nodes[0], tab.vul.nodes[1]) 
-    tab.vul.connectOneWay(tab.vul.nodes[1], tab.vul.nodes[2]) 
+    tab.vul.connectOneWay(tab.vul.nodes[0], tab.vul.nodes[1])
+    tab.vul.connectOneWay(tab.vul.nodes[1], tab.vul.nodes[2])
     v6.thresholdPri(tab, 1)
     v6.terminalPri(tab, 3)
 
     #Create a Wi-Fi network
     net = network()
-    
-    
-    
-    net.nodes.append(tv)
+
+    #connect Ipod and cam to tab
+    net.connectOneWay(ipod, tab)
+    net.connectOneWay(cam, tab)
+
+    net.nodes.append(ipod)
     net.nodes.append(cam)
     net.nodes.append(tab)
 
-    if(net.checkNodesRange()):
-        #connect tv and cam to tab
-        net.connectOneWay(tv, tab)
-        net.connectOneWay(cam, tab)
-
-
-
-
     #Set the attacker as the start
-    A = computer('attacker')    
+    A = computer('attacker')
     A.setStart()
-    #Link the attacker with TV and camera
+    #Link the attacker with Ipod and camera
     for node in net.nodes:
-        if node.name in ['tv', 'cam']:
+        if node.name in ['ipod', 'cam']:
             A.con.append(node)
         else:
-            node.setEnd() 
-    
-    
+            node.setEnd()
+
     net.nodes.append(A)
     net.constructSE()
     net.printNetWithVul()
-    
+
     return net
 
 if __name__ == '__main__':
     net = createWiFi()
-    no_nodes = 3
+
     #Create HARM and compute attack paths
     """
     h = harm()
@@ -96,12 +87,9 @@ if __name__ == '__main__':
     h.model.printAG()
     """
     #Calculate security metric: attack impact
-    attackImpactAnalysis(net, no_nodes)
-    rw = PyDev.RandomWalk(no_nodes, CONST_DIMENSIONS, velocity=1,
-                    distance=1, border_policy='reflect')
+    attackImpactAnalysis(net, 3)
 
-    print(rw)
-    
+
     #Calculate security metric: risk
-    
+
     
