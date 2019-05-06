@@ -17,6 +17,7 @@ CONST_DIMENSIONS = (300, 300)
 Create network with vulnerabilities for the example IoT network.
 -------------------------------------------------------------------------
 """
+#nick
 # study this part of the code and change wifi to bluetooth
 def createWiFi():
     #Create a TV with two vulnerabilities
