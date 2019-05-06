@@ -27,7 +27,7 @@ class node(object):
         # set coordinates for random initial area
         self.coorX = random.randint(1, 299)
         self.coorY = random.randint(1, 299)
-        self.effRadius = radius
+        self.effRadius = radiuss
 
     #Set the node as normal/start/end
     def setStart(self):
