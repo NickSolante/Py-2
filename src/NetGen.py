@@ -7,6 +7,8 @@ from Harm import *
 from SecurityEvaluator import *
 import math
 import random
+import PyDev
+CONST_DIMENSIONS = (300, 300)
 
 
 """
@@ -14,6 +16,8 @@ import random
 Create network with vulnerabilities for the example IoT network.
 -------------------------------------------------------------------------
 """
+
+# study this part of the code and change wifi to bluetooth
 
 def createWiFi():
     #Create a Ipod with two vulnerabilities
@@ -53,12 +57,18 @@ def createWiFi():
     net = network()
 
     #connect Ipod and cam to tab
-    net.connectOneWay(ipod, tab)
-    net.connectOneWay(cam, tab)
-
     net.nodes.append(ipod)
     net.nodes.append(cam)
     net.nodes.append(tab)
+
+    if(net.checkNodesRange()):
+        #connect tv and cam to tab
+        net.connectOneWay(ipod, tab)
+        net.connectOneWay(cam, tab)
+
+    
+
+
 
     #Set the attacker as the start
     A = computer('attacker')
@@ -88,8 +98,13 @@ if __name__ == '__main__':
     """
     #Calculate security metric: attack impact
     attackImpactAnalysis(net, 3)
-
-
+    rw = PyDev.RandomWalk(3, CONST_DIMENSIONS, velocity=1,
+                          distance=1, border_policy='reflect')
     #Calculate security metric: risk
-
+    print(rw)
     
+
+
+
+
+
