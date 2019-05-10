@@ -8,7 +8,7 @@ from SecurityEvaluator import *
 import math
 import random
 import PyDev
-CONST_DIMENSIONS = (300, 300)
+CONST_DIMENSIONS = (50, 50)
 
 
 """
@@ -22,6 +22,7 @@ Create network with vulnerabilities for the example IoT network.
 def createWiFi():
     #Create a Ipod with two vulnerabilities
     ipod = iot('ipod')
+    print("coordinate:", ipod.coorX, ipod.coorY)
     ipod.subnet.append('wifi')
     v1 = vulNode('CVE-2009-2206')
     v1.createVuls(ipod, 10.0, 1) #CVSS base score: 10.0
@@ -32,6 +33,7 @@ def createWiFi():
 
     #Create a camera with one vulnerability
     cam = iot('cam')
+    print("coordinate:", cam.coorX, cam.coorY)
     cam.subnet.append('wifi')
     v3 = vulNode('CVE-2013-4977')
     v3.createVuls(cam, 10.0, 1) #CVSS base score: 10.0
@@ -40,6 +42,7 @@ def createWiFi():
 
     #Create a tablet with three vulnerabilities
     tab = iot('tab')
+    print("coordiante:", tab.coorX, tab.coorY)
     tab.subnet.append(['wifi', 'zb'])
     v4 = vulNode('tb_v1')
     v4.createVuls(tab, 10.0, 1)
@@ -55,20 +58,30 @@ def createWiFi():
 
     #Create a Wi-Fi network
     net = network()
+    net.withinRange(ipod, tab)
+    net.withinRange(cam, tab)
+    net.withinRange(cam, ipod)
+
+
+    
+    #connect tv and cam to tab
+    if(net.withinRange(ipod, tab) == 1):
+        net.connectOneWay(ipod, tab)
+    
+    if(net.withinRange(cam, tab) == 1):
+        net.connectOneWay(cam, tab)
+
+    if(net.withinRange(ipod, tab) == 1):
+        net.connectOneWay(cam, ipod)
+
+    # net.connectOneWay(cam, tab)
 
     #connect Ipod and cam to tab
     net.nodes.append(ipod)
     net.nodes.append(cam)
     net.nodes.append(tab)
 
-    if(net.checkNodesRange()):
-        #connect tv and cam to tab
-        net.connectOneWay(ipod, tab)
-        net.connectOneWay(cam, tab)
-
     
-
-
 
     #Set the attacker as the start
     A = computer('attacker')
@@ -90,14 +103,14 @@ if __name__ == '__main__':
     net = createWiFi()
 
     #Create HARM and compute attack paths
-    """
+  
     h = harm()
     h.constructHarm(net, "attackgraph", 1, "attacktree", 1, 3)
     h.model.printPath()
     h.model.printAG()
-    """
+    
     #Calculate security metric: attack impact
-    attackImpactAnalysis(net, 3)
+    # attackImpactAnalysis(net, 3)
     rw = PyDev.RandomWalk(3, CONST_DIMENSIONS, velocity=1,
                           distance=1, border_policy='reflect')
     #Calculate security metric: risk

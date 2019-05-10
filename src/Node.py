@@ -11,7 +11,7 @@ class node(object):
     Create basic node object.
     """
     
-    def __init__(self, name, radius = 30):
+    def __init__(self, name, diam = 30):
         self.name = name
         print(name)
         #Set connections 
@@ -25,9 +25,9 @@ class node(object):
         self.isEnd = False
         self.subnet = []
         # set coordinates for random initial area
-        self.coorX = random.randint(1, 299)
-        self.coorY = random.randint(1, 299)
-        self.effRadius = radius
+        self.coorX = random.randint(1, 74)
+        self.coorY = random.randint(1, 74)
+        self.effDiam = diam
 
     #Set the node as normal/start/end
     def setStart(self):
@@ -79,7 +79,7 @@ class computer(node):
     Could be used for the attacker node.
     """
     def __init__(self, name):
-        super(computer, self).__init__(name, radius = 60)
+        super(computer, self).__init__(name, diam = 60)
         self.vul = None
         self.type = None
             
