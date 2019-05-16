@@ -8,6 +8,7 @@ from SecurityEvaluator import *
 import math
 import random
 import PyDev
+import time
 CONST_DIMENSIONS = (50, 50)
 
 
@@ -22,7 +23,8 @@ Create network with vulnerabilities for the example IoT network.
 def createWiFi():
     #Create a Ipod with two vulnerabilities
     ipod = iot('ipod')
-    print("coordinate:", ipod.coorX, ipod.coorY)
+    for i in range(3):
+        print("coordinate:", ipod.a[i], ipod.b[i])
     ipod.subnet.append('wifi')
     v1 = vulNode('CVE-2009-2206')
     v1.createVuls(ipod, 10.0, 1) #CVSS base score: 10.0
@@ -33,7 +35,8 @@ def createWiFi():
 
     #Create a camera with one vulnerability
     cam = iot('cam')
-    print("coordinate:", cam.coorX, cam.coorY)
+    for i in range(3):
+        print("coordinate:", cam.a[i], cam.b[i])
     cam.subnet.append('wifi')
     v3 = vulNode('CVE-2013-4977')
     v3.createVuls(cam, 10.0, 1) #CVSS base score: 10.0
@@ -42,7 +45,8 @@ def createWiFi():
 
     #Create a tablet with three vulnerabilities
     tab = iot('tab')
-    print("coordiante:", tab.coorX, tab.coorY)
+    for i in range(3):
+        print("coordiante:", tab.a[i], tab.b[i])
     tab.subnet.append(['wifi', 'zb'])
     v4 = vulNode('tb_v1')
     v4.createVuls(tab, 10.0, 1)
@@ -114,8 +118,11 @@ if __name__ == '__main__':
     rw = PyDev.RandomWalk(3, CONST_DIMENSIONS, velocity=1,
                           distance=1, border_policy='reflect')
     #Calculate security metric: risk
-    print(rw)
-    
+    for i in rw:
+        print(i[1])
+        break
+
+
 
 
 

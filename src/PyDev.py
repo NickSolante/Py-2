@@ -195,3 +195,9 @@ class RandomWalk(StochasticWalk):
         StochasticWalk.__init__(
             self, nr_nodes, dimensions, FL_DISTR, VELOCITY_DISTR, border_policy=border_policy)
 
+def stochastic_walk(*args, **kwargs):
+    return iter(StochasticWalk(*args, **kwargs))
+
+def random_walk(*args, **kwargs):
+    return iter(RandomWalk(*args, **kwargs))
+
