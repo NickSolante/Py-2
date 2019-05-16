@@ -5,6 +5,8 @@ This module contains node objects
 # from random import *
 import random
 from math import *
+import PyDev
+import time
 
 class node(object):
     """
@@ -25,9 +27,25 @@ class node(object):
         self.isEnd = False
         self.subnet = []
         # set coordinates for random initial area
-        self.coorX = random.randint(1, 74)
-        self.coorY = random.randint(1, 74)
+        self.coorX = random.randint(1, 49)
+        self.coorY = random.randint(1, 49)
+        self.dimension = (self.coorX, self.coorY)
         self.effDiam = diam
+        rw = PyDev.RandomWalk(3, self.dimension, velocity=1,
+                              distance=1, border_policy='reflect')
+        j = 0
+        self.a = []
+        self.b = []
+        for i in rw:
+            self.dimension = i[1]
+            self.coorX = self.dimension[0]
+            self.coorY = self.dimension[1]
+            self.a.append(self.coorX)
+            self.b.append(self.coorY)
+            #time.sleep(1)
+            j+=1
+            if j > 2:
+                break
 
     #Set the node as normal/start/end
     def setStart(self):
@@ -50,8 +68,8 @@ class iot(node):
         super(iot, self).__init__(name)
         self.vul = None
         self.type = None
-        
-        
+
+
     def checkNodeInCons(self, node1, node2):
         """
         Check whether the node1 is in the connections of node2.
