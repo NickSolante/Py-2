@@ -20,11 +20,11 @@ Create network with vulnerabilities for the example IoT network.
 
 # study this part of the code and change wifi to bluetooth
 
-def createWiFi():
+def createWiFi(j):
     #Create a Ipod with two vulnerabilities
+    i = j
     ipod = iot('ipod')
-    for i in range(3):
-        print("coordinate:", ipod.a[i], ipod.b[i])
+    print("coordinate:", ipod.a[i], ipod.b[i])
     ipod.subnet.append('wifi')
     v1 = vulNode('CVE-2009-2206')
     v1.createVuls(ipod, 10.0, 1) #CVSS base score: 10.0
@@ -35,8 +35,7 @@ def createWiFi():
 
     #Create a camera with one vulnerability
     cam = iot('cam')
-    for i in range(3):
-        print("coordinate:", cam.a[i], cam.b[i])
+    print("coordinate:", cam.a[i], cam.b[i])
     cam.subnet.append('wifi')
     v3 = vulNode('CVE-2013-4977')
     v3.createVuls(cam, 10.0, 1) #CVSS base score: 10.0
@@ -45,8 +44,7 @@ def createWiFi():
 
     #Create a tablet with three vulnerabilities
     tab = iot('tab')
-    for i in range(3):
-        print("coordiante:", tab.a[i], tab.b[i])
+    print("coordiante:", tab.a[i], tab.b[i])
     tab.subnet.append(['wifi', 'zb'])
     v4 = vulNode('tb_v1')
     v4.createVuls(tab, 10.0, 1)
@@ -66,14 +64,20 @@ def createWiFi():
 
 
     #connect tv and cam to tab
-    if(net.withinRange(ipod, tab, 1) == 1):
+    if(net.withinRange(ipod, tab, i) == 1):
         net.connectOneWay(ipod, tab)
+    else:
+        net.disconnectTwoWays(ipod, tab)
 
-    if(net.withinRange(cam, tab, 1) == 1):
+    if(net.withinRange(cam, tab, i) == 1):
         net.connectOneWay(cam, tab)
+    else:
+        net.disconnectTwoWays(cam, tab)
 
-    if(net.withinRange(ipod, tab, 1) == 1):
+    if(net.withinRange(ipod, tab, i) == 1):
         net.connectOneWay(cam, ipod)
+    else:
+        net.disconnectTwoWays(cam, ipod)
 
     # net.connectOneWay(cam, tab)
 
@@ -101,7 +105,8 @@ def createWiFi():
     return net
 
 if __name__ == '__main__':
-    net = createWiFi()
+    for i in range(2):
+        net = createWiFi(i)
 
     #Create HARM and compute attack paths
 
@@ -111,7 +116,7 @@ if __name__ == '__main__':
     #h.model.printAG()
 
     #Calculate security metric: attack impact
-    attackImpactAnalysis(net, 3)
+        attackImpactAnalysis(net, 3)
 
 
 

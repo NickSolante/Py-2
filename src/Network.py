@@ -81,18 +81,18 @@ class network(object):
     # function checks if they are within range
     def withinRange(self, node1, node2, j):
         i = j
-        for i in range(3):
-            dist = math.sqrt((node2.a[i] - node1.a[i])**2 + (node2.b[i] - node1.b[i])**2)
-          #  time.sleep(1)
-            print("the distance", dist)
-        
-            if (dist > node1.effDiam):
-                print("no bitch")
-                return -1
 
-            else:
-                print("yas kween")
-                return 1
+        dist = math.sqrt((node2.a[i] - node1.a[i])**2 + (node2.b[i] - node1.b[i])**2)
+          #  time.sleep(1)
+        print("the distance", dist)
+        
+        if (dist > node1.effDiam):
+            print("no bitch")
+            return -1
+
+        else:
+            print("yas kween")
+            return 1
 
     # checks if each node is whithin range of eachother
 
