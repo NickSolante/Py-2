@@ -62,20 +62,17 @@ def createWiFi():
 
     #Create a Wi-Fi network
     net = network()
-    net.withinRange(ipod, tab)
-    net.withinRange(cam, tab)
-    net.withinRange(cam, ipod)
 
 
-    
+
     #connect tv and cam to tab
-    if(net.withinRange(ipod, tab) == 1):
+    if(net.withinRange(ipod, tab, 1) == 1):
         net.connectOneWay(ipod, tab)
-    
-    if(net.withinRange(cam, tab) == 1):
+
+    if(net.withinRange(cam, tab, 1) == 1):
         net.connectOneWay(cam, tab)
 
-    if(net.withinRange(ipod, tab) == 1):
+    if(net.withinRange(ipod, tab, 1) == 1):
         net.connectOneWay(cam, ipod)
 
     # net.connectOneWay(cam, tab)
@@ -85,7 +82,7 @@ def createWiFi():
     net.nodes.append(cam)
     net.nodes.append(tab)
 
-    
+
 
     #Set the attacker as the start
     A = computer('attacker')
@@ -107,20 +104,14 @@ if __name__ == '__main__':
     net = createWiFi()
 
     #Create HARM and compute attack paths
-  
-    h = harm()
-    h.constructHarm(net, "attackgraph", 1, "attacktree", 1, 3)
-    h.model.printPath()
-    h.model.printAG()
-    
+
+ #   h = harm()
+  #  h.constructHarm(net, "attackgraph", 1, "attacktree", 1, 3)
+   # h.model.printPath()
+    #h.model.printAG()
+
     #Calculate security metric: attack impact
-    # attackImpactAnalysis(net, 3)
-    rw = PyDev.RandomWalk(3, CONST_DIMENSIONS, velocity=1,
-                          distance=1, border_policy='reflect')
-    #Calculate security metric: risk
-    for i in rw:
-        print(i[1])
-        break
+    attackImpactAnalysis(net, 3)
 
 
 
