@@ -13,7 +13,7 @@ class node(object):
     Create basic node object.
     """
     
-    def __init__(self, name, diam = 30):
+    def __init__(self, name, diam = 20):
         self.name = name
         print(name)
         #Set connections 
@@ -27,26 +27,6 @@ class node(object):
         self.isEnd = False
         self.subnet = []
         # set coordinates for random initial area
-        self.coorX = random.randint(1, 49)
-        self.coorY = random.randint(1, 49)
-        self.dimension = (self.coorX, self.coorY)
-        self.effDiam = diam
-        rw = PyDev.RandomWalk(3, self.dimension, velocity=1,
-                              distance=1, border_policy='reflect')
-        j = 0
-        self.a = []
-        self.b = []
-        for i in rw:
-            self.dimension = i[1]
-            self.coorX = self.dimension[0]
-            self.coorY = self.dimension[1]
-            self.a.append(self.coorX)
-            self.b.append(self.coorY)
-            #time.sleep(1)
-            j+=1
-            if j > 2:
-                break
-
     #Set the node as normal/start/end
     def setStart(self):
         self.isStart = True
@@ -68,7 +48,25 @@ class iot(node):
         super(iot, self).__init__(name)
         self.vul = None
         self.type = None
-
+        self.coorX = random.randint(1, 50)
+        self.coorY = random.randint(1, 50)
+        self.dimension = (self.coorX, self.coorY)
+        self.effDiam = 20
+        rw = PyDev.RandomWalk(3, self.dimension, velocity=1,
+                              distance=1, border_policy='reflect')
+        j = 0
+        self.a = []
+        self.b = []
+        for i in rw:
+            self.dimension = i[1]
+            self.coorX = self.dimension[0]
+            self.coorY = self.dimension[1]
+            self.a.append(self.coorX)
+            self.b.append(self.coorY)
+            # time.sleep(1)
+            j += 1
+            if j > 2:
+                break
 
     def checkNodeInCons(self, node1, node2):
         """
