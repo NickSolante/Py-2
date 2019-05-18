@@ -79,19 +79,17 @@ class network(object):
             node2.con.append(node1)
 
     # function checks if they are within range
-    def withinRange(self, node1, node2, j):
-        i = j
-
-        dist = math.sqrt((node2.a[i] - node1.a[i])**2 + (node2.b[i] - node1.b[i])**2)
-          #  time.sleep(1)
+    def withinRange(self, node1, node2, timeinsec):
+        i = timeinsec
+        dist = math.sqrt((node2.Xcoor[i] - node1.Xcoor[i])**2 + (node2.Ycoor[i] - node1.Ycoor[i])**2)
         print("the distance", dist)
         
         if (dist > node1.effDiam):
-            print("no bitch")
+            print("Connection Failed")
             return -1
 
         else:
-            print("yas kween")
+            print("Connection was Successful")
             return 1
 
     # checks if each node is whithin range of eachother

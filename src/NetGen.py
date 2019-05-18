@@ -20,11 +20,12 @@ Create network with vulnerabilities for the example IoT network.
 
 # study this part of the code and change wifi to bluetooth
 
-def createWiFi(j):
+def createWiFi(time):
     #Create a Ipod with two vulnerabilities
-    i = j
+    i = time
     ipod = iot('ipod')
-    print("coordinate:", ipod.a[i], ipod.b[i])
+    ipod.changeCoordinate()
+    print("coordinate:", ipod.Xcoor[i], ipod.Ycoor[i])
     ipod.subnet.append('wifi')
     v1 = vulNode('CVE-2009-2206')
     v1.createVuls(ipod, 10.0, 1) #CVSS base score: 10.0
@@ -35,7 +36,8 @@ def createWiFi(j):
 
     #Create a camera with one vulnerability
     cam = iot('cam')
-    print("coordinate:", cam.a[i], cam.b[i])
+    cam.changeCoordinate()
+    print("coordinate:", cam.Xcoor[i], cam.Ycoor[i])
     cam.subnet.append('wifi')
     v3 = vulNode('CVE-2013-4977')
     v3.createVuls(cam, 10.0, 1) #CVSS base score: 10.0
@@ -44,7 +46,8 @@ def createWiFi(j):
 
     #Create a tablet with three vulnerabilities
     tab = iot('tab')
-    print("coordiante:", tab.a[i], tab.b[i])
+    tab.changeCoordinate()
+    print("coordiante:", tab.Xcoor[i], tab.Ycoor[i])
     tab.subnet.append(['wifi', 'zb'])
     v4 = vulNode('tb_v1')
     v4.createVuls(tab, 10.0, 1)
@@ -105,15 +108,8 @@ def createWiFi(j):
     return net
 
 if __name__ == '__main__':
-    for i in range(2):
+    for i in range(10):
         net = createWiFi(i)
-
-    #Create HARM and compute attack paths
-
- #   h = harm()
-  #  h.constructHarm(net, "attackgraph", 1, "attacktree", 1, 3)
-   # h.model.printPath()
-    #h.model.printAG()
 
     #Calculate security metric: attack impact
         attackImpactAnalysis(net, 3)

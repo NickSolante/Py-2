@@ -52,20 +52,22 @@ class iot(node):
         self.coorY = random.randint(1, 50)
         self.dimension = (self.coorX, self.coorY)
         self.effDiam = 20
+        self.Xcoor = [self.coorX]
+        self.Ycoor = [self.coorY]
+
+
+    def changeCoordinate(self):
         rw = PyDev.RandomWalk(3, self.dimension, velocity=1,
                               distance=1, border_policy='reflect')
-        j = 0
-        self.a = []
-        self.b = []
+        time = 0
         for i in rw:
             self.dimension = i[1]
             self.coorX = self.dimension[0]
             self.coorY = self.dimension[1]
-            self.a.append(self.coorX)
-            self.b.append(self.coorY)
-            # time.sleep(1)
-            j += 1
-            if j > 2:
+            self.Xcoor.append(self.coorX)
+            self.Ycoor.append(self.coorY)
+            time += 1
+            if time > 8:
                 break
 
     def checkNodeInCons(self, node1, node2):
