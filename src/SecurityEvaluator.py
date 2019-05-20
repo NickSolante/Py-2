@@ -9,6 +9,7 @@ import os
 import math
 from random import shuffle, uniform, expovariate
 import numpy as np
+import csv
 
 #-------------------------------------------------------
 #Compute maximum risk
@@ -97,6 +98,7 @@ def computeAttackImpact(harm):
     
     harm.model.calcImpact()
     print("=================================================")
+    
     print("Print attack paths: \n")
     for path in harm.model.allpath:
         pathImpact = 0
@@ -114,7 +116,10 @@ def computeAttackImpact(harm):
     value = max(impact)
     
     print("Maximum attack impact is: ", value)
-    
+
+   
+
+
     return value
 
 
@@ -130,6 +135,9 @@ def attackImpactAnalysis(net, pri):
     else:
         return 0
         
+    
+    
+
     return ai
 
 #---------------------------------------------------------

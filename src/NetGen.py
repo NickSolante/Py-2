@@ -9,6 +9,8 @@ import math
 import random
 import PyDev
 import time
+import csv
+import matplotlib.pyplot as plt
 CONST_DIMENSIONS = (50, 50)
 
 
@@ -107,13 +109,27 @@ def createWiFi(time):
 
     return net
 
+
+
 if __name__ == '__main__':
+    j = 0
+    aim = []
+    csvData = [['person', 'age'], ['something', '21'], ['nick', '51']]
     for i in range(10):
         net = createWiFi(i)
 
     #Calculate security metric: attack impact
-        attackImpactAnalysis(net, 3)
+        j = attackImpactAnalysis(net, 3)
+        aim.append(j)
 
+    with open('impact.csv', 'w', newline='', encoding='utf-8') as csvFile:
+            writer = csv.writer(csvFile)
+            print(aim)
+            writer.writerow(map(lambda x: [x], aim))
+    csvFile.close()
+    plt.plot(aim)
+    plt.ylabel('some numbers')
+    plt.show()
 
 
 
