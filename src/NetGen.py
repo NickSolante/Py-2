@@ -114,7 +114,6 @@ def createWiFi(time):
 if __name__ == '__main__':
     j = 0
     aim = []
-    csvData = [['person', 'age'], ['something', '21'], ['nick', '51']]
     for i in range(10):
         net = createWiFi(i)
 
@@ -122,13 +121,14 @@ if __name__ == '__main__':
         j = attackImpactAnalysis(net, 3)
         aim.append(j)
 
-    with open('impact.csv', 'w', newline='', encoding='utf-8') as csvFile:
-            writer = csv.writer(csvFile)
-            print(aim)
-            writer.writerow(map(lambda x: [x], aim))
-    csvFile.close()
+    # with open('impact.csv', 'w', newline='', encoding='utf-8') as csvFile:
+    #         writer = csv.writer(csvFile)
+    #         print(aim)
+    #         writer.writerow(map(lambda x: [x], aim))
+    # csvFile.close()
     plt.plot(aim)
-    plt.ylabel('some numbers')
+    plt.ylabel('Attack Impact Value')
+    plt.xlabel('Time Point')
     plt.show()
 
 
