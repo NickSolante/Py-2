@@ -95,7 +95,9 @@ def computeAttackImpact(harm):
     Compute attack impact for HARM using attack graph as upper layer and attack tree as lower layer.
     """
     impact = []
-    
+    counter = 0
+  
+
     harm.model.calcImpact()
     print("=================================================")
     
@@ -112,33 +114,41 @@ def computeAttackImpact(harm):
         
         print("\n")
         impact.append(pathImpact)
+        counter += 1
+        
         
     value = max(impact)
+ 
     
     print("Maximum attack impact is: ", value)
+
+    print(value)
+    print(counter)
 
    
 
 
-    return value
+    return value,counter
 
 
 def attackImpactAnalysis(net, pri):
 
     h = harm()
+    
     h.constructHarm(net, "attackgraph", 1, "attacktree", 1, pri)
     h.model.printPath()
     h.model.printAG()
     
     if len(h.model.allpath) != 0:
-        ai = computeAttackImpact(h)
+        ai, cnt = computeAttackImpact(h)
     else:
         return 0
         
     
-    
+    print(ai)
+    print(cnt)
 
-    return ai
+    return ai,cnt
 
 #---------------------------------------------------------
 #Compute minimum attack cost

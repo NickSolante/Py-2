@@ -112,24 +112,47 @@ def createWiFi(time):
 
 
 if __name__ == '__main__':
-    j = 0
+    
     aim = []
+    aPaths = []
     for i in range(10):
         net = createWiFi(i)
 
     #Calculate security metric: attack impact
         j = attackImpactAnalysis(net, 3)
-        aim.append(j)
+        print("j: ", j)
+        if(j == 0):
+            aim.append(0)
+            aPaths.append(0)
+            continue
+        else:
+            aim.append(j[0])
+            aPaths.append(j[1])
 
     # with open('impact.csv', 'w', newline='', encoding='utf-8') as csvFile:
     #         writer = csv.writer(csvFile)
     #         print(aim)
     #         writer.writerow(map(lambda x: [x], aim))
     # csvFile.close()
+    fig = plt.figure(figsize=(6,4))
+    sub1 = fig.add_subplot(2, 2, 1, title='aim', ylabel='Attack Impact Value', xlabel='Time Point')
+    sub1.set_title('aim')
+    sub1.plot(aim)
+
+    plt.subplot(211)
     plt.plot(aim)
-    plt.ylabel('Attack Impact Value')
     plt.xlabel('Time Point')
+    plt.ylabel('Attack Impact Value')
+    plt.title('Aim')
+
+    #plt.show()
+    plt.subplot(212)
+    plt.plot(aPaths)
+    plt.xlabel('Time Point')
+    plt.ylabel('Number of Attack Paths')
+
     plt.show()
+
 
 
 
